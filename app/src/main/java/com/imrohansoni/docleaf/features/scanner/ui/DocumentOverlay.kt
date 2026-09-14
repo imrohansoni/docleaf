@@ -24,7 +24,7 @@ fun DocumentOverlay(
         targetValue = when {
             document == null -> 0f
             isConfirmed      -> 1f
-            else             -> 0.45f   // provisional: visible but clearly "searching"
+            else             -> 0.45f
         },
         animationSpec = tween(150), label = "alpha",
     )
@@ -74,9 +74,9 @@ fun DocumentOverlay(
                 path = path,
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        green.copy(alpha = 0.16f),   // was 0.08
-                        green.copy(alpha = 0.45f),   // was 0.24 — brighter sweep band
-                        green.copy(alpha = 0.16f),   // was 0.08
+                        green.copy(alpha = 0.16f),
+                        green.copy(alpha = 0.45f),
+                        green.copy(alpha = 0.16f),
                     ),
                     start = band,
                     end = band + Offset(size.width, size.height),
@@ -84,10 +84,8 @@ fun DocumentOverlay(
                 alpha = alpha,
             )
         } else {
-            drawPath(path, green.copy(alpha = 0.20f * alpha))   // was 0.10
+            drawPath(path, green.copy(alpha = 0.20f * alpha))
         }
-
-        // Border: solid on real edges, dashed where the document is cut by the frame
         listOf(
             Triple(tl, tr, Edge.TOP), Triple(tr, br, Edge.RIGHT),
             Triple(br, bl, Edge.BOTTOM), Triple(bl, tl, Edge.LEFT),
@@ -101,8 +99,6 @@ fun DocumentOverlay(
                     PathEffect.dashPathEffect(floatArrayOf(16f, 12f), 0f) else null,
             )
         }
-
-        // Marching DASHES around the border (replaces the dot section)
         if (isConfirmed) {
             drawPath(
                 path = path,
@@ -110,7 +106,6 @@ fun DocumentOverlay(
                 style = Stroke(
                     width = 3.dp.toPx(),
                     cap = StrokeCap.Square,
-                    // Long dash + short gap = clean marching-ants look, not dots
                     pathEffect = PathEffect.dashPathEffect(floatArrayOf(dashLength, gapLength), dashPhase),
                 ),
             )

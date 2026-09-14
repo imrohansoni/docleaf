@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.imrohansoni.docleaf.core.navigation.AppNavigationRoot
-import com.imrohansoni.docleaf.core.theme.PdfAppTheme
+import com.imrohansoni.docleaf.core.theme.DocLeafScanner
 
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            PdfAppTheme {
+            DocLeafScanner {
                 Box(modifier = Modifier.fillMaxSize().background(Color.Black).safeDrawingPadding()) {
                     AppNavigationRoot()
                 }

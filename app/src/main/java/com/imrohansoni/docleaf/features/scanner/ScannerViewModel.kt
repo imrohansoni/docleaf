@@ -44,15 +44,14 @@ import kotlin.math.ceil
 class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     companion object {
         private const val TAG = "ScanPipeline"
-        private const val OVERLAY_EXPAND = 0.015f   // live border: hug the edge
-        private const val CROP_EXPAND = 0.03f       // final crop: never cut text
+        private const val OVERLAY_EXPAND = 0.015f
+        private const val CROP_EXPAND = 0.03f
     }
 
     private val liveDetector by lazy {
         MlCornerDetector(app, "fastvit_t8_h_e_bifpn_256_fp32.onnx", MlCornerDetector.Mode.HEATMAP)
     }
     private val captureDetector by lazy {
-        // Capture uses u2net segmentation — accurate on open books / low contrast.
         MlCornerDetector(app, "u2net_int8.onnx", MlCornerDetector.Mode.SEGMENTATION)
     }
 
@@ -95,25 +94,21 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     private val _shutter = MutableStateFlow<ShutterState>(ShutterState.Idle)
     val shutter: StateFlow<ShutterState> = _shutter.asStateFlow()
 
-    /** Thumbnails of everything captured this session. `size` is the badge count. */
     private val _pages = MutableStateFlow<List<Bitmap>>(emptyList())
     val pages: StateFlow<List<Bitmap>> = _pages.asStateFlow()
 
-    /** Fires once per capture — the UI animates this thumbnail into the corner. */
     private val _flyingThumbnail = MutableSharedFlow<Bitmap>()
     val flyingThumbnail: SharedFlow<Bitmap> = _flyingThumbnail.asSharedFlow()
 
     private var countdownJob: Job? = null
     private val countdownMillis = 3_000L
 
-    /** Called from onCameraFrame once the document is stable. */
     private fun startCountdown() {
         if (countdownJob?.isActive == true) return
         countdownJob = viewModelScope.launch {
             val step = 50L
             var elapsed = 0L
             while (elapsed < countdownMillis) {
-                // Bail out the moment the document is lost or the user moves.
                 if (!_isConfirmed.value) {
                     _shutter.value = ShutterState.Idle
                     return@launch
@@ -125,7 +120,7 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
                 elapsed += step
             }
             _shutter.value = ShutterState.Capturing
-            _autoCaptureReady.emit(Unit)   // CameraScreen calls captureDocument()
+            _autoCaptureReady.emit(Unit)
         }
     }
 
@@ -135,7 +130,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
         if (_shutter.value !is ShutterState.Capturing) _shutter.value = ShutterState.Idle
     }
 
-    /** Shutter tap — always captures immediately, cancelling any countdown. */
     fun onShutterTapped(imageCapture: ImageCapture) {
         cancelCountdown()
         _shutter.value = ShutterState.Capturing
@@ -148,8 +142,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     fun onCameraFrame(bitmap: Bitmap) {
         if (!analyzing.compareAndSet(false, true)) return
 
-        // Heatmap model is ~50ms; running every 2nd frame keeps ~15 detections/sec
-        // (smooth to the eye) while halving CPU so the preview never stutters.
         skipFrame = !skipFrame
         if (skipFrame) { analyzing.set(false); return }
 
@@ -175,7 +167,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
 
                 val confirmed = smoother.feed(raw, bitmap.width, bitmap.height)
 
-                // Show raw instantly (dim/searching), upgrade to confirmed (bright/locked).
                 _liveDocument.value = confirmed ?: raw
                 _isConfirmed.value = confirmed != null
 
@@ -215,7 +206,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
         return edges
     }
 
-    // ── UI actions ─────────────────────────────────────────────────────────────
     fun toggleFlash() = _uiState.update { it.copy(flashEnabled = !it.flashEnabled) }
     fun setCaptureMode(m: CaptureMode) { _uiState.update { it.copy(captureMode = m) }; autoCapture.reset() }
     fun setDocumentType(t: DocumentType) {
@@ -229,7 +219,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
         _liveDocument.value = null; _isConfirmed.value = false
     }
 
-    // ── Capture ────────────────────────────────────────────────────────────────
     fun captureDocument(imageCapture: ImageCapture) {
         if (_uiState.value.isCapturing) return
         _uiState.update { it.copy(isCapturing = true) }
@@ -260,8 +249,6 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    // THE HYBRID SEAM: this runs once per capture. Swap captureDetector to a
-    // segmentation model here (after the spike passes) and nothing else changes.
     private fun detectAndReview(raw: Bitmap) {
         viewModelScope.launch(Dispatchers.Default) {
             val detected = runCatching { captureDetector.detect(raw) }.getOrNull()
@@ -297,9 +284,9 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
                 val cropped = corrector.correct(rawBitmap, quad)
                 val enhanced = processor.process(cropped, _uiState.value.documentType)
                 val uri = saveToGallery(enhanced)
-                enhanced to uri                       // ← return BOTH
+                enhanced to uri
             }.fold(
-                onSuccess = { (enhanced, uri) ->      // ← destructure
+                onSuccess = { (enhanced, uri) ->
                     val thumb = enhanced.thumbnail()
                     _pages.update { it + thumb }
                     _flyingThumbnail.emit(thumb)
@@ -356,6 +343,5 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
-/** Small preview bitmap for the corner stack + flying animation. */
 private fun Bitmap.thumbnail(width: Int = 200): Bitmap =
     scale(width, (width.toFloat() / this.width * height).toInt())

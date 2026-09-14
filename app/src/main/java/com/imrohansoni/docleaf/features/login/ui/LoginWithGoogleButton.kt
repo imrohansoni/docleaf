@@ -28,7 +28,7 @@ fun LoginWithGoogleButton(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(Color.White, SquircleShape(0.8f))
+            .background(Color.White, SquircleShape(8.dp))
             .clickable {
                 onClick()
             },

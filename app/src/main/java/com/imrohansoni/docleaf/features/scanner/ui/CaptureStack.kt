@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/** Bottom-left thumbnail box. Shows the latest page + a live count badge. */
 @Composable
 fun CapturedStack(
     pages: List<Bitmap>,

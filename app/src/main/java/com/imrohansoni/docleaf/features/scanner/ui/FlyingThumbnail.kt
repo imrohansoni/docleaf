@@ -18,16 +18,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 
-/**
- * Animates the just-captured page from the middle of the preview down into the
- * CapturedStack in the bottom-left, then calls [onFinished].
- *
- * Rendered in the ROOT Box (not inside the preview) so it isn't clipped as it
- * travels below the preview area.
- *
- * TUNE: [endXDp] / [endYDp] assume the stack sits ~40dp from the bottom-left.
- * Nudge to match your actual bottom bar.
- */
 @Composable
 fun FlyingThumbnail(
     bitmap: Bitmap?,
@@ -40,8 +30,6 @@ fun FlyingThumbnail(
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val density = LocalDensity.current
         val progress = remember(bitmap) { Animatable(0f) }
-
-        // Start: roughly the centre of the 3:4 preview (upper-middle of screen).
         val startY = with(density) { (-maxHeight * 0.18f).toPx() }
         val endX = with(density) { (-maxWidth / 2 + endXDp.dp).toPx() }
         val endY = with(density) { (maxHeight / 2 - endYDp.dp).toPx() }

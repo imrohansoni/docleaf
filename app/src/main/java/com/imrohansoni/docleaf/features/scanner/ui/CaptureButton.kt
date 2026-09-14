@@ -36,23 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imrohansoni.docleaf.features.scanner.model.ShutterState
 
-/**
- * Shutter button.
- *
- *   ┌──────────────────────────────┐
- *   │  outer ring  = countdown arc │
- *   │   ┌────────────────────┐     │
- *   │   │  inner circle      │     │
- *   │   │  = countdown "3"   │     │
- *   │   └────────────────────┘     │
- *   └──────────────────────────────┘
- *
- * Idle       → white circle, faint ring. Tap to capture.
- * Countdown  → ring fills green clockwise, number counts 3→2→1 inside.
- * Capturing  → circle dims, spinner.
- *
- * Tapping ALWAYS captures immediately, even mid-countdown.
- */
 @Composable
 fun CaptureButton(
     state: ShutterState,

@@ -11,19 +11,6 @@ import com.imrohansoni.docleaf.features.login.ui.LoginScreen
 import com.imrohansoni.docleaf.features.onboarding.ui.OnboardingScreen
 import com.imrohansoni.docleaf.features.picturePreview.ui.PicturePreviewScreen
 import com.imrohansoni.docleaf.features.scanner.ui.CameraScreen
-import androidx.core.net.toUri
-
-
-fun getSampleImageUris() : List<String> {
-
-    val img1 = "file:///android_asset/IMG1.jpeg".toUri().toString()
-    val img2 = "file:///android_asset/IMG2.jpeg".toUri().toString()
-    val img3 = "file:///android_asset/IMG3.jpeg".toUri().toString()
-    val img4 = "file:///android_asset/IMG4.jpeg".toUri().toString()
-    val img5 = "file:///android_asset/IMG5.jpeg".toUri().toString()
-
-    return listOf(img1, img2, img3, img4, img5)
-}
 
 @Composable
 fun AppNavigationRoot(modifier: Modifier = Modifier) {

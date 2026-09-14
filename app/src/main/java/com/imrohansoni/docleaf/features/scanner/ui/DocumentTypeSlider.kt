@@ -25,7 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
-import com.imrohansoni.docleaf.core.components.Icon
+import com.imrohansoni.docleaf.core.components.basic.Icon
 import com.imrohansoni.docleaf.features.scanner.model.DocumentType
 import kotlin.math.absoluteValue
 
@@ -108,7 +108,7 @@ fun DocumentTypeSlider(
 
                 Icon(
                     icon = type.icon,
-                    color = if (page == pagerState.currentPage) Color.White else Color.Gray,
+                    tint = if (page == pagerState.currentPage) Color.White else Color.Gray,
                     size = if (page == pagerState.currentPage) 24.dp else 32.dp
                 )
 
@@ -131,7 +131,6 @@ fun DocumentTypeSlider(
                         )
                 )
             }
-
         }
     }
 }

@@ -35,9 +35,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import com.imrohansoni.docleaf.R
+import com.imrohansoni.docleaf.core.components.basic.Text
+import com.imrohansoni.docleaf.core.components.input.Button
+import com.imrohansoni.docleaf.core.components.input.ButtonVariant
 import com.imrohansoni.docleaf.core.navigation.Screen
-import com.imrohansoni.docleaf.core.components.Button
-import com.imrohansoni.docleaf.core.components.ButtonType
 import kotlinx.coroutines.launch
 
 data class OnboardingPage(
@@ -115,16 +116,18 @@ fun OnboardingScreen(
         ) {
             Button(
                 modifier = Modifier.weight(1f),
-                text = "SKIP",
-                buttonType = ButtonType.SECONDARY,
+                variant = ButtonVariant.Outlined,
                 onClick = {
                     backstack.clear()
                     backstack.add(Screen.Main)
-                })
+                }
+            ) {
+                Text("SKIP")
+            }
 
             Button(
                 modifier = Modifier.weight(1f),
-                text = if (pagerState.currentPage == pages.lastIndex) "START" else "NEXT",
+                variant = ButtonVariant.Outlined,
                 onClick = {
                     if (pagerState.currentPage < pages.lastIndex) {
                         coroutineScope.launch {
@@ -137,7 +140,9 @@ fun OnboardingScreen(
                         backstack.add(Screen.Main)
                     }
                 }
-            )
+            ) {
+                Text(if (pagerState.currentPage == pages.lastIndex) "START" else "NEXT")
+            }
         }
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -149,7 +154,8 @@ fun OnboardingScreen(
 fun OnboardingPageContent(
     page: OnboardingPage
 ) {
-    Column(modifier = Modifier.fillMaxWidth(),
+    Column(
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -160,14 +166,20 @@ fun OnboardingPageContent(
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        Box(Modifier.height(50.dp), contentAlignment = Alignment.Center){
+        Box(Modifier.height(50.dp), contentAlignment = Alignment.Center) {
             BasicText(
                 text = page.title,
                 style = TextStyle(
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_bold, FontWeight.Bold, FontStyle.Normal))
+                    fontFamily = FontFamily(
+                        Font(
+                            R.font.inter_bold,
+                            FontWeight.Bold,
+                            FontStyle.Normal
+                        )
+                    )
                 )
             )
         }

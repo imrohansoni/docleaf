@@ -8,9 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.imrohansoni.docleaf.core.components.FlashlightButton
-import com.imrohansoni.docleaf.core.components.IconButton
 import com.imrohansoni.docleaf.core.components.Icons
+import com.imrohansoni.docleaf.core.components.input.IconButton
 
 @Composable
 fun CameraTopBar(
@@ -26,12 +25,18 @@ fun CameraTopBar(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
-        FlashlightButton(flashlightOn = flashEnabled) {
-            onToggleFlash()
-        }
+        IconButton(
+            icon = if (flashEnabled) Icons.FlashlightOff else Icons.FlashlightOn,
+            contentDescription = "",
+            onClick = {
+                onToggleFlash()
+            })
 
-        IconButton(icon = Icons.Settings) {
-            onCameraSetting()
-        }
+        IconButton(
+            icon = Icons.Settings,
+            contentDescription = "",
+            onClick = {
+                onCameraSetting()
+            })
     }
 }

@@ -35,7 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.imrohansoni.docleaf.core.components.FlipCameraButton
+import com.imrohansoni.docleaf.core.components.Icons
+import com.imrohansoni.docleaf.core.components.input.IconButton
 import com.imrohansoni.docleaf.features.scanner.ScannerViewModel
 import com.imrohansoni.docleaf.features.scanner.camera.CameraBinder
 import com.imrohansoni.docleaf.features.scanner.camera.CameraConfig
@@ -45,17 +46,6 @@ import com.imrohansoni.docleaf.features.scanner.model.ScanResult
 import kotlinx.coroutines.delay
 import java.util.concurrent.Executors
 
-/**
- * DocLeaf camera screen.
- *
- * Layout (root Box so FlyingThumbnail can travel outside the preview):
- *   Column
- *     ├─ CameraTopBar
- *     ├─ Preview 3:4  →  PreviewView + DocumentOverlay + GuideOverlay + step banner
- *     ├─ DocumentTypeSlider
- *     └─ BottomBar    →  CapturedStack | CaptureButton | SwitchCamera
- *   FlyingThumbnail (absolute, above everything)
- */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CameraScreen(
@@ -252,9 +242,13 @@ fun CameraScreen(
                         modifier = Modifier.align(Alignment.Center),
                     )
 
-                    FlipCameraButton {
-                        vm.switchCamera()
-                    }
+//                    IconButton(
+//                        icon = Icons.Flip,
+//                        contentDescription = "camera flip button",
+//                        onClick = {
+//                            vm.switchCamera()
+//                        }
+//                    )
                 }
             }
         }

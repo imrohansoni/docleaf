@@ -35,8 +35,6 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.imrohansoni.docleaf.core.components.AppIcon
-import com.imrohansoni.docleaf.core.components.Icon
 import com.imrohansoni.docleaf.core.components.Icons
 import com.imrohansoni.docleaf.features.account.ui.AccountScreen
 import com.imrohansoni.docleaf.features.files.ui.FilesScreen
@@ -45,118 +43,118 @@ import com.imrohansoni.docleaf.features.tools.ui.ToolsScreen
 import kotlinx.serialization.Serializable
 
 
-enum class NavItem { HOME, FILES, TOOLS, ACCOUNT }
-
-@Composable
-fun BottomNavIcon(
-    modifier: Modifier = Modifier,
-    icon: AppIcon,
-    activeIcon: AppIcon,
-    selected: Boolean = false,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }) {
-                onClick.invoke()
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            icon = if (selected) activeIcon else icon,
-            color = if (selected) null else Color.White,
-            size = 28.dp
-        )
-    }
-}
-
-@Composable
-fun BottomNavigationBar(
-    selectedNavItem: NavItem = NavItem.HOME,
-    onNavItemSelect: (NavItem) -> Unit,
-    onScanSelect: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Transparent),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-
-        BottomNavIcon(
-            modifier = Modifier.weight(1f),
-            activeIcon = Icons.HomeFill,
-            icon = Icons.Home,
-            selected = selectedNavItem == NavItem.HOME,
-            onClick = {
-                if (selectedNavItem != NavItem.HOME) {
-                    onNavItemSelect.invoke(NavItem.HOME)
-                }
-            }
-        )
-
-        BottomNavIcon(
-            modifier = Modifier.weight(1f),
-            activeIcon = Icons.FolderFill,
-            icon = Icons.Folder,
-            selected = selectedNavItem == NavItem.FILES,
-            onClick = {
-                if (selectedNavItem != NavItem.FILES) {
-                    onNavItemSelect.invoke(NavItem.FILES)
-                }
-            }
-        )
-
-        Box(
-            Modifier
-                .size(60.dp)
-                .clip(CircleShape)
-                .background(Color.Green)
-                .clickable {
-                    onScanSelect.invoke()
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                icon = Icons.Scan,
-                color = Color.White,
-                size = 32.dp
-            )
-        }
-
-
-        BottomNavIcon(
-            modifier = Modifier.weight(1f),
-            activeIcon = Icons.BoxFill,
-            icon = Icons.Box,
-            selected = selectedNavItem == NavItem.TOOLS,
-            onClick = {
-
-                if (selectedNavItem != NavItem.TOOLS) {
-                    onNavItemSelect.invoke(NavItem.TOOLS)
-                }
-
-            }
-        )
-
-
-        BottomNavIcon(
-            modifier = Modifier.weight(1f),
-            activeIcon = Icons.UserCircleFill,
-            icon = Icons.UserCircle,
-            selected = selectedNavItem == NavItem.ACCOUNT,
-            onClick = {
-                if (selectedNavItem != NavItem.ACCOUNT) {
-                    onNavItemSelect.invoke(NavItem.ACCOUNT)
-                }
-            }
-        )
-    }
-}
+//enum class NavItem { HOME, FILES, TOOLS, ACCOUNT }
+//
+//@Composable
+//fun BottomNavIcon(
+//    modifier: Modifier = Modifier,
+//    icon: AppIcon,
+//    activeIcon: AppIcon,
+//    selected: Boolean = false,
+//    onClick: () -> Unit
+//) {
+//    Box(
+//        modifier
+//            .fillMaxWidth()
+//            .height(50.dp)
+//            .clickable(
+//                indication = null,
+//                interactionSource = remember { MutableInteractionSource() }) {
+//                onClick.invoke()
+//            },
+//        contentAlignment = Alignment.Center
+//    ) {
+//        Icon(
+//            icon = if (selected) activeIcon else icon,
+//            color = if (selected) null else Color.White,
+//            size = 28.dp
+//        )
+//    }
+//}
+//
+//@Composable
+//fun BottomNavigationBar(
+//    selectedNavItem: NavItem = NavItem.HOME,
+//    onNavItemSelect: (NavItem) -> Unit,
+//    onScanSelect: () -> Unit
+//) {
+//    Row(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .background(Color.Transparent),
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//
+//        BottomNavIcon(
+//            modifier = Modifier.weight(1f),
+//            activeIcon = Icons.HomeFill,
+//            icon = Icons.Home,
+//            selected = selectedNavItem == NavItem.HOME,
+//            onClick = {
+//                if (selectedNavItem != NavItem.HOME) {
+//                    onNavItemSelect.invoke(NavItem.HOME)
+//                }
+//            }
+//        )
+//
+//        BottomNavIcon(
+//            modifier = Modifier.weight(1f),
+//            activeIcon = Icons.FolderFill,
+//            icon = Icons.Folder,
+//            selected = selectedNavItem == NavItem.FILES,
+//            onClick = {
+//                if (selectedNavItem != NavItem.FILES) {
+//                    onNavItemSelect.invoke(NavItem.FILES)
+//                }
+//            }
+//        )
+//
+//        Box(
+//            Modifier
+//                .size(60.dp)
+//                .clip(CircleShape)
+//                .background(Color.Green)
+//                .clickable {
+//                    onScanSelect.invoke()
+//                },
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Icon(
+//                icon = Icons.Scan,
+//                color = Color.White,
+//                size = 32.dp
+//            )
+//        }
+//
+//
+//        BottomNavIcon(
+//            modifier = Modifier.weight(1f),
+//            activeIcon = Icons.BoxFill,
+//            icon = Icons.Box,
+//            selected = selectedNavItem == NavItem.TOOLS,
+//            onClick = {
+//
+//                if (selectedNavItem != NavItem.TOOLS) {
+//                    onNavItemSelect.invoke(NavItem.TOOLS)
+//                }
+//
+//            }
+//        )
+//
+//
+//        BottomNavIcon(
+//            modifier = Modifier.weight(1f),
+//            activeIcon = Icons.UserCircleFill,
+//            icon = Icons.UserCircle,
+//            selected = selectedNavItem == NavItem.ACCOUNT,
+//            onClick = {
+//                if (selectedNavItem != NavItem.ACCOUNT) {
+//                    onNavItemSelect.invoke(NavItem.ACCOUNT)
+//                }
+//            }
+//        )
+//    }
+//}
 
 
 @Serializable
@@ -201,13 +199,13 @@ fun MainScreen(
         bottomBackstack.add(screen)
     }
 
-    val selectedNavItem = when (bottomBackstack.lastOrNull()) {
-        BottomNavigationScreen.Home -> NavItem.HOME
-        BottomNavigationScreen.Files -> NavItem.FILES
-        BottomNavigationScreen.Tools -> NavItem.TOOLS
-        BottomNavigationScreen.Account -> NavItem.ACCOUNT
-        else -> NavItem.HOME
-    }
+//    val selectedNavItem = when (bottomBackstack.lastOrNull()) {
+//        BottomNavigationScreen.Home -> NavItem.HOME
+//        BottomNavigationScreen.Files -> NavItem.FILES
+//        BottomNavigationScreen.Tools -> NavItem.TOOLS
+//        BottomNavigationScreen.Account -> NavItem.ACCOUNT
+//        else -> NavItem.HOME
+//    }
 
     var hasPermission by remember {
         mutableStateOf(
@@ -269,33 +267,33 @@ fun MainScreen(
             )
         }
 
-        BottomNavigationBar(
-            selectedNavItem = selectedNavItem,
-            onNavItemSelect = {
-
-                when (it) {
-
-                    NavItem.HOME ->
-                        navigateBottom(BottomNavigationScreen.Home)
-
-                    NavItem.FILES ->
-                        navigateBottom(BottomNavigationScreen.Files)
-
-                    NavItem.TOOLS ->
-                        navigateBottom(BottomNavigationScreen.Tools)
-
-                    NavItem.ACCOUNT ->
-                        navigateBottom(BottomNavigationScreen.Account)
-                }
-            },
-            onScanSelect = {
-                if (!hasPermission) {
-                    launcher.launch(Manifest.permission.CAMERA)
-                } else {
-                    backstack.add(Screen.Camera)
-                }
-            }
-        )
+//        BottomNavigationBar(
+//            selectedNavItem = selectedNavItem,
+//            onNavItemSelect = {
+//
+//                when (it) {
+//
+//                    NavItem.HOME ->
+//                        navigateBottom(BottomNavigationScreen.Home)
+//
+//                    NavItem.FILES ->
+//                        navigateBottom(BottomNavigationScreen.Files)
+//
+//                    NavItem.TOOLS ->
+//                        navigateBottom(BottomNavigationScreen.Tools)
+//
+//                    NavItem.ACCOUNT ->
+//                        navigateBottom(BottomNavigationScreen.Account)
+//                }
+//            },
+//            onScanSelect = {
+//                if (!hasPermission) {
+//                    launcher.launch(Manifest.permission.CAMERA)
+//                } else {
+//                    backstack.add(Screen.Camera)
+//                }
+//            }
+//        )
 
         Spacer(Modifier.height(24.dp))
     }
