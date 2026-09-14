@@ -36,10 +36,8 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.imrohansoni.docleaf.core.components.Icons
-import com.imrohansoni.docleaf.features.account.ui.AccountScreen
-import com.imrohansoni.docleaf.features.files.ui.FilesScreen
+
 import com.imrohansoni.docleaf.features.home.ui.HomeScreen
-import com.imrohansoni.docleaf.features.tools.ui.ToolsScreen
 import kotlinx.serialization.Serializable
 
 
@@ -243,23 +241,23 @@ fun MainScreen(
                             }
                         }
 
-                        BottomNavigationScreen.Files -> {
-                            NavEntry(key) {
-                                FilesScreen()
-                            }
-                        }
-
-                        BottomNavigationScreen.Tools -> {
-                            NavEntry(key) {
-                                ToolsScreen()
-                            }
-                        }
-
-                        BottomNavigationScreen.Account -> {
-                            NavEntry(key) {
-                                AccountScreen()
-                            }
-                        }
+//                        BottomNavigationScreen.Files -> {
+//                            NavEntry(key) {
+//                                FilesScreen()
+//                            }
+//                        }
+//
+//                        BottomNavigationScreen.Tools -> {
+//                            NavEntry(key) {
+//                                ToolsScreen()
+//                            }
+//                        }
+//
+//                        BottomNavigationScreen.Account -> {
+//                            NavEntry(key) {
+//                                AccountScreen()
+//                            }
+//                        }
 
                         else -> throw Exception("Invalid screen")
                     }

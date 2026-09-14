@@ -20,6 +20,7 @@ object Icons {
     val Box = IconResource(R.drawable.box)
     val BoxFill = IconResource(R.drawable.box_fill)
     val Check = IconResource(R.drawable.check)
+    val ChevronDown = IconResource(R.drawable.chevron_down)
     val Controller = IconResource(R.drawable.controller)
     val CropPlus = IconResource(R.drawable.copy_plus)
     val Crop = IconResource(R.drawable.crop)

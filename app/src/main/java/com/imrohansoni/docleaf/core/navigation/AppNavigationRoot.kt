@@ -9,7 +9,6 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.imrohansoni.docleaf.features.login.ui.LoginScreen
 import com.imrohansoni.docleaf.features.onboarding.ui.OnboardingScreen
-import com.imrohansoni.docleaf.features.picturePreview.ui.PicturePreviewScreen
 import com.imrohansoni.docleaf.features.scanner.ui.CameraScreen
 
 @Composable
@@ -58,14 +57,6 @@ fun AppNavigationRoot(modifier: Modifier = Modifier) {
                     }
                 }
 
-                is Screen.PicturePreview -> {
-                    NavEntry(key = key) {
-                        PicturePreviewScreen(
-                            backstack = backstack,
-                            imageUri = key.imageUri
-                        )
-                    }
-                }
 
                 is Screen.DocumentEdit -> {
                     NavEntry(key = key) {
@@ -77,13 +68,6 @@ fun AppNavigationRoot(modifier: Modifier = Modifier) {
                     }
                 }
 
-//                Screen.EdgeDetectionPipeline -> {
-//                    NavEntry(key = key) {
-//                        EdgeDetectionPipelineScreen(
-//
-//                        )
-//                    }
-//                }
 
 
                 else -> throw Exception("Invalid screen ")
